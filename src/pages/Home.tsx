@@ -20,7 +20,6 @@ function Home() {
   const [profile, setProfile] = useState(null)
 
     const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
-    console.log(token);
 
     const getProfile = async () => {
         try {
