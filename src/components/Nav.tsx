@@ -28,7 +28,7 @@ function Nav() {
 
 
   return (
-    <div className={`${isDarkMode ? "dark sticky top-0" : "sticky top-0"}`}>
+    <div className={`${isDarkMode ? "dark sticky top-0 z-10" : "sticky top-0 z-10"}`}>
 
       <div className="navbar bg-violet-200
        dark:bg-slate-500 w-full md:w-full sm:w-full shadow-md dark:shadow-white">

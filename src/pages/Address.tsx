@@ -38,12 +38,12 @@ function Address() {
 
 const navigate = useNavigate();
 
-const cart = useSelector((state: { cart: { cart: (any)[] } }) => state.cart.cart);
+const cart = useSelector((state: { cart: { cart: ({productId:string,name:string,quantity:number,price:number,totalPrice:number,image:string})[] } }) => state.cart.cart);
 
-const totalPrice = cart.reduce((sum: any, item: any) => sum + item.totalPrice, 0);
+const totalPrice = cart.reduce((sum: number, item: {totalPrice:number}) => sum + item.totalPrice, 0);
 
 
-const orderItems:any = [];
+const orderItems:{product:string,qty:number}[] = [];
 cart.map((item)=>{
   orderItems.push({product:item.productId,qty:item.quantity})
 })
