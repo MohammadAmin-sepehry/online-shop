@@ -7,7 +7,8 @@ import Swal from "sweetalert2";
 function UploadAvatar() {
   
 
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null);
+  console.log(profile);
 
   const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
   console.log(token);

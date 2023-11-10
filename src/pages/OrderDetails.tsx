@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom'
 import { RotateLoader } from 'react-spinners';
 
 function OrderDetails() {
-    const [profile, setProfile] = useState(null)
+    const [profile, setProfile] = useState(null);
+    console.log(profile);
 
     const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
     console.log(token);
@@ -62,7 +63,7 @@ function OrderDetails() {
 
     }, []);
 
-
+    console.log(order);
     const isDarkMode = useSelector((state: { ui: { isDarkMode: string } }) => state.ui.isDarkMode);
 
 
@@ -74,10 +75,10 @@ function OrderDetails() {
 
                 : error ? <p className="flex justify-center text-5xl font-bold dark:text-slate-100
          items-center h-[100vh]">{error}</p> : <div className='flex flex-col gap-5 py-5 px-5 '>
-                    {order.map((item: any) => {
+                    {order.map((item: {product:{description:string,image:string,name:string,category:string,brand:string,price:number,rating:number}}) => {
                         return <div key={item.product.description} className='flex flex-col gap-5 rounded-md
             dark:bg-slate-500 dark:text-slate-100 bg-violet-100 p-5'>
-                            <img src={item.product.image} className='w-36 h-40 object-contain' />
+                            <img src={item.product.image} className='w-36 h-40 object-contain mix-blend-multiply brightness-125' />
                             <p><span className='text-sm text-violet-500 dark:text-violet-200'>name : </span>{item.product.name}</p>
                             <p><span className='text-sm text-violet-500 dark:text-violet-200'>category : </span>{item.product.category}</p>
                             <p><span className='text-sm text-violet-500 dark:text-violet-200'>brand : </span>{item.product.brand}</p>

@@ -17,7 +17,8 @@ type ProductsTypes = {
 
 
 function Home() {
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null);
+  console.log(profile);
 
     const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
 
@@ -40,13 +41,6 @@ function Home() {
         getProfile()
     }, [])
 
-  
-
-
-
-
-  const x = useSelector((state)=>state)
-  console.log(x);
 
   const [products, setProducts] = useState<ProductsTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);

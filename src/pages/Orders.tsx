@@ -8,10 +8,10 @@ import { RotateLoader } from "react-spinners";
 
 function Orders() {
   
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null);
+  console.log(profile);
 
     const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
-    console.log(token);
 
     const getProfile = async () => {
         try {
@@ -49,7 +49,6 @@ function Orders() {
       });
       setOrders(data);
       setIsLoading(false);
-      console.log(data);
     } catch (error: any) {
       setError(error.response.data.message);
       setIsLoading(false)
@@ -62,28 +61,26 @@ function Orders() {
 
   const navigate = useNavigate()
 
-
   const orderId = (id:string)=>{
-    const orderid = (orders.find((item:any)=>item._id === id)._id);
-    console.log(orderid);
+    const orderid = (orders.find((item:{_id:string})=>item._id === id)._id);
     navigate(`/order/${orderid}`)
   } 
   
-
   const isDarkMode = useSelector((state: { ui: { isDarkMode: string } }) => state.ui.isDarkMode);
 
   return (
-    <div className={`${isDarkMode ? "dark dark:pb-56 dark:h-[100vh]" : "pb-56"}`}>
+    <div className={`${isDarkMode ? "dark dark:pb-56 dark:h-full" : "pb-56"}`}>
       {isLoading ? <div className="flex justify-center w-screen h-screen items-center">
         <RotateLoader color="#fb41ff" />
       </div>
         : error ? <p className="flex justify-center text-5xl font-bold dark:text-slate-100
          items-center h-[100vh]">{error}</p> : <div 
         className="flex flex-col gap-10 py-10">
-          {orders.map((item: any) => {
+          {orders.map((item: {_id:string,totalPrice:number,orderItems:[]}) => {
             return <div key={item._id} className="flex justify-between 
         dark:text-sky-50 mx-5 px-5 py-2 dark:bg-slate-500 bg-violet-100">
               {/* <p className="w-72">{item.orderItems}</p> */}
+              ({item.orderItems.length}) {item.orderItems.length>1?'products':'product'}
               <p className="w-40">total price : {item.totalPrice} $</p>
               {/* <p>qty: {item.qty}</p> */}
               <button onClick={()=>{orderId(item._id)}} className="bg-violet-400 

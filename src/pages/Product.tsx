@@ -21,10 +21,10 @@ type PrtoductTypes = {
 }
 
 function Product() {
-    const [profile, setProfile] = useState(null)
+    const [profile, setProfile] = useState(null);
+    console.log(profile);
 
     const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
-    console.log(token);
 
     const getProfile = async () => {
         try {
@@ -76,12 +76,11 @@ function Product() {
     }, [])
 
     const isDarkMode = useSelector((state: { ui: { isDarkMode: string } }) => state.ui.isDarkMode);
-    console.log(isDarkMode);
     const dispatch = useDispatch()
 
-    const cart = useSelector((state: { cart: { cart: (string | number)[] } }) => state.cart.cart);
+    const cart = useSelector((state: { cart: { cart: {productId:string,image:string,name:string,price:number,countInStock:number,quantity:number,totalPrice:number}[] } }) => state.cart.cart);
 
-    const itemInCart = cart?.find((item:any) => item.productId === id);
+    const itemInCart = cart?.find((item) => item.productId === id);
 
     const handleAddToCart = () => {
         const newItem = {
@@ -117,7 +116,7 @@ function Product() {
                 md:grid md:grid-cols-2 md:dark:bg-slate-500 dark:shadow-lg dark:shadow-slate-400
                 shadow-lg shadow-violet-400'>
                     <img className='w-full h-72 object-contain flex justify-center mx-5 mix-blend-multiply brightness-125' src={product?.image} />
-                    <div className='flex flex-col justify-center items-start gap-y-10 mb-10 
+                    <div className='flex flex-col justify-center items-start gap-y-10 mb-10 px-4 
                     md:mr-10'>
                         <p className='dark:text-slate-100 text-lg font-bold'><span className='text-sm text-violet-400'>Name : </span>{product?.name}</p>
                         <p className='dark:text-slate-100 text-lg font-bold'><span className='text-sm text-violet-400'>Brand : </span>{product?.brand}</p>

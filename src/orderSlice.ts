@@ -23,7 +23,7 @@ const orderSlice = createSlice({
 
 export const {clearOrder} = orderSlice.actions;
 
-export const getOrder:any =(orderItems:any, city:any, address:any, postalCode:any, phone:any, token:any,totalPrice:any) =>
+export const getOrder =(orderItems:[], city:string, address:string, postalCode:string, phone:string, token:string,totalPrice:string) =>
 async(dispatch:any) => {
         try {
             const { data } = await axios.post(

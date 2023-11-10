@@ -5,11 +5,21 @@ import { RotateLoader } from "react-spinners";
 import axios from "axios";
 import {useState,useEffect} from 'react'
 
+type CartTypes = {
+    productId:string,
+    name:string,
+    image:string,
+    countInStock:number,
+    price:number,
+    quantity:number,
+    totalPrice:number
+}
+
+
 function Cart() {
     const [profile, setProfile] = useState(null)
 
     const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
-    console.log(token);
 
     const getProfile = async () => {
         try {
@@ -31,11 +41,10 @@ function Cart() {
     }, [])
 
 
-    const cart = useSelector((state: { cart: { cart: (any)[] } }) => state.cart.cart);
-    console.log(cart);
+    const cart = useSelector((state: { cart: { cart: CartTypes[] } }) => state.cart.cart);
 
-    const totalCartQuantity = cart.reduce((sum: any, item: any) => sum + item.quantity, 0);
-    const totalCartPrice = cart.reduce((sum: any, item: any) => sum + item.totalPrice, 0);
+    const totalCartQuantity = cart.reduce((sum: number, item: CartTypes) => sum + item.quantity, 0);
+    const totalCartPrice = cart.reduce((sum: number, item: CartTypes) => sum + item.totalPrice, 0);
     const dispatch = useDispatch()
 
     const isDarkMode = useSelector((state: { ui: { isDarkMode: string } }) => state.ui.isDarkMode);
@@ -58,7 +67,7 @@ function Cart() {
                     return <div key={index} className="flex items-center my-10 mx-10 justify-between
                 py-4 border-b-2">
                         <div className="flex items-center gap-10 ">
-                            <img src={item.image} className="w-24 h-24 object-contain" />
+                            <img src={item.image} className="w-24 h-24 object-contain mix-blend-multiply brightness-125" />
                             <p className="dark:text-white">{item.name}</p>
                             <p className="dark:text-white mr-4">{item.price}$</p>
                         </div>

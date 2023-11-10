@@ -18,7 +18,7 @@ const changeProfileSlice = createSlice({
     }
 })
 
-export const getchangeProfile:any = (firstname: any, lastname: any, gender: any, age: any, city: any, token: any) => async (dispatch: any) => {
+export const getchangeProfile = (firstname: string, lastname: string, gender: string, age: string, city: string, token: string) => async (dispatch: any) => {
     try {
 
         const { data } = await axios.put(

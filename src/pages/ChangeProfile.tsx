@@ -32,7 +32,6 @@ function ChangeProfile() {
   const [profile, setProfile] = useState(null)
 
   const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
-  console.log(token);
 
   const getProfile = async () => {
       try {
@@ -66,7 +65,7 @@ function ChangeProfile() {
       city: '',
     },
     validate: (values) => {
-      let errors: any = {};
+      let errors: {firstname?:string,lastname?:string,gender?:string,age?:string,city?:string} = {};
 
       if (values.firstname === '') {
         errors.firstname = "the firstname field is required"
@@ -89,7 +88,7 @@ function ChangeProfile() {
 
       if (values.age === '') {
         errors.age = "the age field is required"
-      } else if (values.age < 18) {
+      } else if (+(values.age) < 18) {
         errors.age = "you must be greater than 18 year old"
       }
 
@@ -101,7 +100,7 @@ function ChangeProfile() {
 
       return errors;
     },
-    onSubmit: (values: any) => {
+    onSubmit: (values: {firstname:string,lastname:string,gender:string,age:string,city:string}) => {
       dispatch(getchangeProfile(values.firstname, values.lastname, values.gender, values.age, values.city, token))
     }
   })
