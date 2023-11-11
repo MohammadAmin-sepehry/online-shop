@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RotateLoader } from "react-spinners";
 
@@ -18,28 +18,31 @@ type ProductsTypes = {
 
 function Home() {
   const [profile, setProfile] = useState(null);
+  const [search, setSearch] = useState('');
+  const [select, setSelect] = useState('higher');
+
   console.log(profile);
 
-    const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
+  const token = JSON.parse(localStorage.getItem('user') || '{}')[0]?.user?.token;
 
-    const getProfile = async () => {
-        try {
-            const { data } = await axios.get('http://kzico.runflare.run/user/profile',
-                {
-                    headers: {
-                        authorization:
-                            `Bearer ${token}`
-                    },
-                })
-            setProfile(data.user);
-        } catch (error: any) {
-          localStorage.removeItem("user")
-        }
+  const getProfile = async () => {
+    try {
+      const { data } = await axios.get('http://kzico.runflare.run/user/profile',
+        {
+          headers: {
+            authorization:
+              `Bearer ${token}`
+          },
+        })
+      setProfile(data.user);
+    } catch (error: any) {
+      localStorage.removeItem("user")
     }
+  }
 
-    useEffect(() => {
-        getProfile()
-    }, [])
+  useEffect(() => {
+    getProfile()
+  }, [])
 
 
   const [products, setProducts] = useState<ProductsTypes[]>([]);
@@ -70,7 +73,7 @@ function Home() {
   }, []);
 
 
-  const isDarkMode = useSelector((state:{ui:{isDarkMode:string}}) => state.ui.isDarkMode);
+  const isDarkMode = useSelector((state: { ui: { isDarkMode: string } }) => state.ui.isDarkMode);
 
 
   const image = `https://static.vecteezy.com/system/resources/previews/010/974/059/original/online-shopping-3d-illustration-online-shop-digital-marketing-concept-modern-store-3d-rendering-png.png`
@@ -91,6 +94,16 @@ function Home() {
         <h2 className="font-bold text-4xl ml-10">Last Products</h2>
         <p className="ml-12 mt-6 text-2xl">free delivery 😊</p>
       </div>
+      <div className="flex justify-center gap-4">
+        <input onChange={e => setSearch(e.target.value)} placeholder="search your product" className="
+        border-2 w-64 py-1 px-2 outline-none rounded-md text-lg" />
+        <select onChange={e => setSelect(e.target.value)} className="rounded-lg px-2 border-2 outline-none">
+          <option value='higher'>higher price</option>
+          <option value='lower'>lower price</option>
+          <option value='az'>A-Z</option>
+          <option value='za'>Z-A</option>
+        </select>
+      </div>
       <div className="dark:bg-slate-600 grid grid-cols-1 mt-10 justify-center w-full items-center gap-20
     sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {loading ?
@@ -100,22 +113,35 @@ function Home() {
           : isError ? <div className="flex h-screen items-center
         justify-center text-5xl font-bold w-screen"><p className="dark:text-white">{isError}</p></div>
             :
-            products.map((product) => {
-              return <div key={product._id} className="border-2 w-80 rounded-lg p-6 flex flex-col
+            products.sort((x:any, y) => {
+              switch (select) {
+                case 'higher':
+                  return y.price - x.price
+                case 'lower':
+                  return x.price - y.price
+                case 'az':
+                  return x.name.localeCompare(y.name)
+                case 'za':
+                  return y.name.localeCompare(x.name)
+              }
+            })
+              .filter((product) => product.name.includes(search))
+              .map((product) => {
+                return <div key={product._id} className="border-2 w-80 rounded-lg p-6 flex flex-col
         hover:scale-105 hover:transition-all shadow-lg shadow-violet-400 gap-5  dark:bg-slate-500 bg-violet-100
         justify-center items-center mx-auto dark:text-slate-200 dark:shadow-gray-400">
-                <img src={product.image} className="w-64 h-64 object-contain mix-blend-multiply brightness-125" />
-                <p title={product.name} className="truncate w-full text-center font-semibold text-
+                  <img src={product.image} className="w-64 h-64 object-contain mix-blend-multiply brightness-125" />
+                  <p title={product.name} className="truncate w-full text-center font-semibold text-
           lg">{product.name}</p>
-                <p>Quantity : {product.countInStock}</p>
-                <div className="flex w-full justify-between">
-                  <p>{product.price} $</p>
-                  <p>Rate : {product.rating} /5</p>
-                </div>
-                <Link to={`/product/${product._id}`} className="bg-violet-600 text-white py-1 px-4
+                  <p>Quantity : {product.countInStock}</p>
+                  <div className="flex w-full justify-between">
+                    <p>{product.price} $</p>
+                    <p>Rate : {product.rating} /5</p>
+                  </div>
+                  <Link to={`/product/${product._id}`} className="bg-violet-600 text-white py-1 px-4
           rounded-md">more...</Link>
-              </div>
-            })}
+                </div>
+              })}
       </div>
     </div>
   )
