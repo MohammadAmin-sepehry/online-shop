@@ -90,7 +90,10 @@ function ChangeProfile() {
         errors.age = "the age field is required"
       } else if (+(values.age) < 18) {
         errors.age = "you must be greater than 18 year old"
+      }else if (+(values.age) >= 80) {
+        errors.age = "you must be less than 80 year old"
       }
+
 
       if (values.city === '') {
         errors.city = "the city field is required"

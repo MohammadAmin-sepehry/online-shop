@@ -53,6 +53,7 @@ function Checkout() {
     orderItems.push({product:item.productId,qty:item.quantity})
   })
 
+  const address = useSelector(state => state?.order?.order?.shippingAddress.address)
 
   const handleDone = () => {
     // dispatch(getOrderHistory(orderItems,city,address,postalCode,phone,token,totalPrice));
@@ -92,6 +93,7 @@ function Checkout() {
       {products ? 
       <div>
         <p className="text-center mt-20 text-3xl font-bold font-sans dark:text-white">Total Price : {totalCartPrice} $</p>
+        <p className="text-center mt-20 text-xl font-sans dark:text-white">Address : {address}</p>
       <div className="flex justify-evenly mt-40">
            <Link to='/cart' className="bg-lime-600 text-white hover:bg-lime-800 transition-all
            text-3xl py-2 px-8 rounded-lg">Edit</Link>

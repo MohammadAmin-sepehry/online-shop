@@ -118,7 +118,7 @@ function Signin() {
 
 
             <label className="text-center">Password</label>
-            <input name="password"
+            <input name="password" type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

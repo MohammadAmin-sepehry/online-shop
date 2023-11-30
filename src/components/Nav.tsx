@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Icon } from "@iconify/react";
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ function Nav() {
     dispatch(toggleMode());
   };
 
-
+  const navigate = useNavigate()
 
   const cart = useSelector((state: { cart: { cart: (string | number)[] } }) => state.cart.cart);
   const totalCartQuantity = cart.reduce((sum: any, item: any) => sum + item.quantity, 0);
@@ -21,7 +21,9 @@ function Nav() {
   const totalCartPrice = cart.reduce((sum: any, item: any) => sum + item.totalPrice, 0);
 
   const handleLogOut = () => {
-    dispatch(userLogout())
+    dispatch(userLogout());
+    navigate('/')
+
   }
   const isUser = useSelector((state:any)=>state?.user?.user[0]?.success);
   const userEmail = useSelector((state:any)=>state?.user?.user[0]?.user?.email);

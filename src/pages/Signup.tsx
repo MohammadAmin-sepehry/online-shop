@@ -103,7 +103,7 @@ function Signup() {
           <form onSubmit={formik.handleSubmit} className="flex flex-col bg-violet-100
            w-2/6 border-2 dark:bg-slate-300 shadow-lg p-6 mx-auto h-fit rounded-lg">
             <label className="text-center">User Name</label>
-            <input name="username"
+            <input name="username" 
               value={formik.values.username}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -139,7 +139,7 @@ function Signup() {
 
 
             <label className="text-center">Password</label>
-            <input name="password"
+            <input name="password" type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -156,7 +156,7 @@ function Signup() {
 
 
             <label className="text-center">Confirm Password</label>
-            <input name="confirmPassword"
+            <input name="confirmPassword" type="password"
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

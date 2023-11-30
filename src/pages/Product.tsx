@@ -24,7 +24,7 @@ function Product() {
     const [profile, setProfile] = useState(null);
     console.log(profile);
 
-    const token = JSON.parse(localStorage.getItem('user')||'{}')[0]?.user?.token;
+    const token = JSON.parse(localStorage.getItem('user') || '{}')[0]?.user?.token;
 
     const getProfile = async () => {
         try {
@@ -37,7 +37,7 @@ function Product() {
                 })
             setProfile(data.user);
         } catch (error: any) {
-          localStorage.removeItem("user")
+            localStorage.removeItem("user")
         }
     }
 
@@ -78,8 +78,7 @@ function Product() {
     const isDarkMode = useSelector((state: { ui: { isDarkMode: string } }) => state.ui.isDarkMode);
     const dispatch = useDispatch()
 
-    const cart = useSelector((state: { cart: { cart: {productId:string,image:string,name:string,price:number,countInStock:number,quantity:number,totalPrice:number}[] } }) => state.cart.cart);
-
+    const cart = useSelector((state: { cart: { cart: { productId: string, image: string, name: string, price: number, countInStock: number, quantity: number, totalPrice: number }[] } }) => state.cart.cart);
     const itemInCart = cart?.find((item) => item.productId === id);
 
     const handleAddToCart = () => {
@@ -98,7 +97,15 @@ function Product() {
                 title: 'Oops...',
                 text: 'This product is already in your cart!'
             })
-        } else {
+
+        } else if (product?.countInStock === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'This product is not in stock!'
+            })
+        }
+        else {
             dispatch(addItem(newItem));
         }
     }

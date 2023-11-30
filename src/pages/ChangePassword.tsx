@@ -83,13 +83,13 @@ function ChangePassword() {
         <form onSubmit={(e) => { changePassword(); handleSubmit(e) }} className="flex flex-col justify-center 
     w-5/6 mx-auto items-center p-10  bg-violet-100
     sm:w-3/6 md:w-3/6 lg:w-3/6 xl:w-3/6 shadow-xl rounded-lg dark:bg-slate-300">
-          <label className="text-center">Old Password</label>
-          <input  onChange={e => setOldPassword(e.target.value)} name="city"
+          <label className="text-center" >Old Password</label>
+          <input  onChange={e => setOldPassword(e.target.value)} name="city" type='password'
             className="w-5/6 border-2 py-1 px-4 mb-10 focus:outline-violet-400" />
 
           <label className="text-center">New Password</label>
           <input  onChange={e => setNewPassword(e.target.value)}
-            className="w-5/6 border-2 py-1 px-4 mb-10 focus:outline-violet-400" />
+            className="w-5/6 border-2 py-1 px-4 mb-10 focus:outline-violet-400" type='password' />
 
 
           <button type="submit" className="rounded-md mx-auto bg-violet-500 text-white

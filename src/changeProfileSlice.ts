@@ -44,6 +44,11 @@ export const getchangeProfile:any = (firstname: string, lastname: string, gender
         })
     } catch (error:any) {
         console.log(error.response.data.message);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${error.response.data.message}`,
+          });
     }
 }
 
